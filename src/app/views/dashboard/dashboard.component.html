@@ -1,8 +1,10 @@
 <div class="container">
 
-    <p>Investimentos</p>
+    <p>
+        <strong>Investimentos (gráfico geral. patrimônio geral)</strong>
+    </p>
 
-    <table class="table table-bordered">
+    <table class="table table-bordered bg-white">
         <thead>
             <tr>
                 <th>Fundo</th>
@@ -15,32 +17,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Tesouro Selic 2027 2% + IPCA</td>
-                <td>R$ 300.000,00</td>
-                <td>+2.5% (R$ 1.788,00)</td>
-                <td>Tesouro Direto</td>
-                <td>Renda Fixa</td>
-                <td>NuInvest</td>
-                <td>01/01/2020</td>
-            </tr>
-            <tr>
-                <td>BCAAI11</td>
-                <td>R$ 192.345,00</td>
-                <td>+2.5% (R$ 1.788,00)</td>
-                <td>FII</td>
-                <td>Renda Variável</td>
-                <td>NuInvest</td>
-                <td>01/01/2020</td>
-            </tr>
-            <tr>
-                <td>Conta Digital</td>
-                <td>R$ 7.135,00</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>Wise</td>
-                <td>01/01/2020</td>
+            <tr *ngFor="let fund of funds">
+                <td>{{ fund.name }}</td>
+                <td>{{ fund.amount | currency : 'BRL' }}</td>
+                <td>{{ fund.naoSeiMudar }}</td>
+                <td>{{ fund.type }}</td>
+                <td>{{ fund.fixacaoMudar }}</td>
+                <td>{{ fund.institution }}</td>
+                <td>{{ fund.updatedAt | date: "dd/mm/YYYY HH:mm:ss" }}</td>
             </tr>
         </tbody>
         <tfoot>
@@ -50,7 +34,7 @@
             </tr>
             <tr>
                 <th colspan="6">Total Rendimentos</th>
-                <th>R$ 3.987,00 (+5.99%)</th>
+                <th>R$ 3.987,00 (+9.99%)</th>
             </tr>
             <tr>
                 <th colspan="6">Meu Patrimônio</th>
@@ -61,75 +45,101 @@
 
     <br><br>
 
-    Objetivo mensal de investimento: 
+    <p>
+        <strong>Aportes (somente os aportes que fiz)</strong>
+    </p>
+
+    <table class="table table-bordered bg-white">
+        <thead>
+            <tr>
+                <th>Fundo</th>
+                <th>Data</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let investment of investments">
+                <td>{{ investment.fund }}</td>
+                <td>{{ investment.createdAt | date: "dd/mm/YYYY" }}</td>
+                <td>{{ investment.amount | currency : 'BRL' }}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="2">Total Rendimentos</th>
+                <th>{{ sumAmountInvestments() | currency : 'BRL' }} (+9.99%)</th>
+            </tr>
+        </tfoot>
+    </table>
 
     <br><br>
 
-    <h4>Meta mensal de investimento: <strong>R$ 50.000,00</strong>.</h4>
-    <p>
-        Novembro 2022 (20 dias restantes)
-    </p>
-
-    <div class="row align-items-center">
-        <div class="col-12 col-md-10">
-            <div class="progress" style="height: 30px;">
-                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 30%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">R$ 15.000,00 (30%)</div>
-            </div>
-        </div>
-        <div class="col text-md-end">
-            R$ 50.000,00
-        </div>
-    </div>
+    <strong>
+        <p>Investimentos</p>
+    </strong>
+    <app-chart [data]="multi"></app-chart>
 
     <br><br>
 
-    <h4>Meta de curto prazo (3 anos): <strong>R$ 1.000.000,00</strong>.</h4>
-    <p>
-        Dezembro 2025
-    </p>
-    <div class="row align-items-center">
-        <div class="col-12 col-md-10">
-            <div class="progress" style="height: 30px;">
-                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 80%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">R$ 3.000.000,00 (50%)</div>
-            </div>
-        </div>
-        <div class="col text-md-end">
-            R$ 1.000.000,00
-        </div>
-    </div>
+    <strong>
+        <p>Rendimentos</p>
+    </strong>
+    <app-chart [data]="multi"></app-chart>
 
     <br><br>
 
-    <h4>Meta de médio prazo (5 anos): <strong>R$ 3.000.000,00</strong>.</h4>
-    <p>
-        Dezembro 2027
-    </p>
-    <div class="row align-items-center">
-        <div class="col-12 col-md-10">
-            <div class="progress" style="height: 30px;">
-                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 40%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">R$ 3.000.000,00 (50%)</div>
-            </div>
-        </div>
-        <div class="col text-md-end">
-            R$ 3.000.000,00
-        </div>
-    </div>
+    <strong>
+        <p>Aportes</p>
+    </strong>
+
+    <app-chart [data]="multi"></app-chart>
+
+    <!--
+    https://www.npmjs.com/package/ngx-currency
+    <input currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+    -->
 
     <br><br>
 
-    <h4>Meta de longo prazo (15 anos): <strong>R$ 10.000.000,00</strong>.</h4>
-    <p>
-        Dezembro 2037
-    </p>
-    <div class="row align-items-center">
-        <div class="col-12 col-md-10">
-            <div class="progress" style="height: 30px;">
-                <div class="progress-bar" role="progressbar" aria-label="Basic example" style="width: 10%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">R$ 3.000.000,00 (50%)</div>
-            </div>
-        </div>
-        <div class="col text-md-end">
-            R$ 10.000.000,00
-        </div>
-    </div>
+
+    <app-goal-bar
+        title="Meta mensal de investimento"
+        [goalAmount]="50000.00"
+        description="Novembro 2022 (20 dias restantes)"
+        [currentAmount]="25000.00"
+        [currentPercentAmount]="calculatePercentage(25000.00, 50000.00)">
+    </app-goal-bar>
+
+    <br>
+
+    <app-goal-bar
+        title="Meta de curto prazo (3 anos)"
+        [goalAmount]="1000000.00"
+        description="Dezembro 2025"
+        [currentAmount]="currentPatrimonyAmount"
+        [currentPercentAmount]="calculatePercentage(currentPatrimonyAmount, 1000000.00)">
+    </app-goal-bar>
+
+    <br>
+
+    <app-goal-bar
+        title="Meta de médio prazo (5 anos)"
+        [goalAmount]="3000000.00"
+        description="Dezembro 2027"
+        [currentAmount]="currentPatrimonyAmount"
+        [currentPercentAmount]="calculatePercentage(currentPatrimonyAmount, 3000000.00)">
+    </app-goal-bar>
+
+    <br>
+
+    <app-goal-bar
+        title="Meta de longo prazo (15 anos)"
+        [goalAmount]="10000000.00"
+        description="Dezembro 2037"
+        [currentAmount]="currentPatrimonyAmount"
+        [currentPercentAmount]="calculatePercentage(currentPatrimonyAmount, 10000000.00)">
+    </app-goal-bar>
+
+    <br><br>
 
 </div>

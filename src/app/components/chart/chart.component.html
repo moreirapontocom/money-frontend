@@ -1,0 +1,38 @@
+<div class="card border-0 shadow">
+    <div class="card-body">
+        <div class="chart-wrapper">
+
+            <ngx-charts-line-chart
+                [scheme]="colorScheme"
+                [legend]="legend"
+                legendTitle=""
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxis]="xAxis"
+                [yAxis]="yAxis"
+                [timeline]="timeline"
+                [results]="data"
+                [legendPosition]="legendPosition"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
+                tooltipTemplate="tooltipTemplate"
+                seriesTooltipTemplate="seriesTooltipTemplate">
+                    <ng-template #tooltipTemplate let-model="model">
+                        <div class="pt-1 pb-1">
+                            {{ model.name }}<br>
+                            {{ model.value | currency : 'BRL' }}
+                        </div>
+                    </ng-template>
+                    <ng-template #seriesTooltipTemplate let-model="model">
+                        <div class="text-start pt-1 pb-1">
+                            <span *ngFor="let item of model">
+                                <span class="chart-label-info-square" [attr.style]="'background-color: ' + item.color + ';'"></span> {{ item.value | currency : 'BRL' }}<br>
+                            </span>
+                        </div>
+                    </ng-template>
+            </ngx-charts-line-chart>
+
+        </div>
+    </div>
+</div>

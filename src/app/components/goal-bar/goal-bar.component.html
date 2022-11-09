@@ -1,0 +1,21 @@
+<div class="card border-0 shadow">
+    <div class="card-body">
+
+        <h4>{{ title }}: <strong>{{ goalAmount | currency : 'BRL' }}</strong>.</h4>
+        <p>
+            <i class="fas fa-calendar me-2"></i> {{ description }}
+        </p>
+
+        <div class="row align-items-center">
+            <div class="col-12 col-md-10">
+                <div class="progress" style="height: 25px;">
+                    <div class="progress-bar" role="progressbar" aria-label="Basic example" [attr.style]="'width:' + currentPercentAmount + '%'" [attr.aria-valuenow]="currentPercentAmount" aria-valuemin="0" aria-valuemax="100">{{ currentAmount | currency : 'BRL' }} ({{ currentPercentAmount }}%)</div>
+                </div>
+            </div>
+            <div class="col text-md-end">
+                {{ goalAmount | currency : 'BRL' }}
+            </div>
+        </div>
+
+    </div>
+</div>
