@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  dtOptions: DataTables.Settings = {};
+  // dtTrigger: Subject<any> = new Subject<any>();
+
   multi: any[] = [
     {
       name: "Tesouro Direto IPCA 2024",

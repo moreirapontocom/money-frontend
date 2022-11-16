@@ -17,6 +17,8 @@ import { GoalBarComponent } from './components/goal-bar/goal-bar.component';
 import { NgxCurrencyModule } from "ngx-currency";
 import { ChartComponent } from './components/chart/chart.component';
 
+import { DataTablesModule } from 'angular-datatables';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +33,7 @@ import { ChartComponent } from './components/chart/chart.component';
     NgxChartsModule,
     BrowserAnimationsModule,
     NgxCurrencyModule,
+    DataTablesModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
