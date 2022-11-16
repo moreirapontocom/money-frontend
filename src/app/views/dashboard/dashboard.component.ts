@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GoalService } from 'src/app/services/goals.service';
+import { Store } from '@ngrx/store';
+import { aportar10k } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-dashboard',
@@ -113,15 +114,19 @@ export class DashboardComponent implements OnInit {
     },
   ];
 
-  currentPatrimonyAmount: number = 850000.00;
+  constructor(
+    private store: Store<any>,
+  ) { }
+
+  ngOnInit(): void {
+  }
+
+  aportar10k(): void {
+    this.store.dispatch(aportar10k());
+  }
 
   sumAmountInvestments(): any {
     return this.investments.reduce((acc, investment) => acc + investment.amount, 0);
-  }
-
-  constructor() { }
-
-  ngOnInit(): void {
   }
 
 }

@@ -9,6 +9,10 @@ import localePt from '@angular/common/locales/pt';
 
 registerLocaleData(localePt);
 
+// NgRx
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './store/app.state';
+
 import { AppComponent } from './app.component';
 import { Routes } from './app.routes';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
@@ -37,6 +41,7 @@ import { HelperService } from './services/helpers.service';
     BrowserAnimationsModule,
     NgxCurrencyModule,
     DataTablesModule,
+    StoreModule.forRoot({ app: appReducer }),
   ],
   providers: [
     HelperService,

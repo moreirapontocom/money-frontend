@@ -4,8 +4,8 @@
         [title]="goal.title"
         [goalAmount]="goal.amount"
         [description]="goal.description"
-        [currentAmount]="currentPatrimonyAmount"
-        [currentPercentAmount]="helpers.calculatePercentage(currentPatrimonyAmount, goal.amount)">
+        [currentAmount]="(currentPatrimonyAmount$ | async) || 0"
+        [currentPercentAmount]="helpers.calculatePercentage((currentPatrimonyAmount$ | async) || 0, goal.amount)">
     </app-goal-bar>
 
     <br>
