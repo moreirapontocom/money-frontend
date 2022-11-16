@@ -1,0 +1,12 @@
+<div *ngFor="let goal of goals">
+
+    <app-goal-bar
+        [title]="goal.title"
+        [goalAmount]="goal.amount"
+        [description]="goal.description"
+        [currentAmount]="currentPatrimonyAmount"
+        [currentPercentAmount]="helpers.calculatePercentage(currentPatrimonyAmount, goal.amount)">
+    </app-goal-bar>
+
+    <br>
+</div>

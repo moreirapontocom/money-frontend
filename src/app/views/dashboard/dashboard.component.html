@@ -1,145 +1,101 @@
-<div class="container">
+<div class="bg-white pt-4 pb-0">
+    <div class="container">
 
-    <p>
-        <strong>Investimentos (gráfico geral. patrimônio geral)</strong>
-    </p>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Metas</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Gráficos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Detalhado</button>
+            </li>
+        </ul>
 
-    <table datatable [dtOptions]="dtOptions"  class="table table-bordered bg-white">
-        <thead>
-            <tr>
-                <th>Fundo</th>
-                <th>Valor</th>
-                <th>Rendimento</th>
-                <th>Aplicação</th>
-                <th>Tipo de fixação</th>
-                <th>Instituição</th>
-                <th>Atualizado em</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let fund of funds">
-                <td>{{ fund.name }}</td>
-                <td>{{ fund.amount | currency : 'BRL' }}</td>
-                <td>{{ fund.naoSeiMudar }}</td>
-                <td>{{ fund.type }}</td>
-                <td>{{ fund.fixacaoMudar }}</td>
-                <td>{{ fund.institution }}</td>
-                <td>{{ fund.updatedAt | date: "dd/mm/YYYY HH:mm:ss" }}</td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th colspan="6">Total Aportado</th>
-                <th>R$ 492.345,00</th>
-            </tr>
-            <tr>
-                <th colspan="6">Total Rendimentos</th>
-                <th>R$ 3.987,00 (+9.99%)</th>
-            </tr>
-            <tr>
-                <th colspan="6">Meu Patrimônio</th>
-                <th>R$ 505.123,00</th>
-            </tr>
-        </tfoot>
-    </table>
+    </div>
+</div>
 
-    <br><br>
-
-    <p>
-        <strong>Aportes (somente os aportes que fiz)</strong>
-    </p>
-
-    <table class="table table-bordered bg-white">
-        <thead>
-            <tr>
-                <th>Fundo</th>
-                <th>Data</th>
-                <th>Valor</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let investment of investments">
-                <td>{{ investment.fund }}</td>
-                <td>{{ investment.createdAt | date: "dd/mm/YYYY" }}</td>
-                <td>{{ investment.amount | currency : 'BRL' }}</td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th colspan="2">Total Rendimentos</th>
-                <th>{{ sumAmountInvestments() | currency : 'BRL' }} (+9.99%)</th>
-            </tr>
-        </tfoot>
-    </table>
-
-    <br><br>
-
-    <strong>
-        <p>Investimentos</p>
-    </strong>
-    <app-chart [data]="multi"></app-chart>
-
-    <br><br>
-
-    <strong>
-        <p>Rendimentos</p>
-    </strong>
-    <app-chart [data]="multi"></app-chart>
-
-    <br><br>
-
-    <strong>
-        <p>Aportes</p>
-    </strong>
-
-    <app-chart [data]="multi"></app-chart>
-
-    <!--
-    https://www.npmjs.com/package/ngx-currency
-    <input currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
-    -->
-
-    <br><br>
+<div class="container pt-4">
 
 
-    <app-goal-bar
-        title="Meta mensal de investimento"
-        [goalAmount]="50000.00"
-        description="Novembro 2022 (20 dias restantes)"
-        [currentAmount]="25000.00"
-        [currentPercentAmount]="calculatePercentage(25000.00, 50000.00)">
-    </app-goal-bar>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 
-    <br>
+            <app-goals></app-goals>
 
-    <app-goal-bar
-        title="Meta de curto prazo (3 anos)"
-        [goalAmount]="1000000.00"
-        description="Dezembro 2025"
-        [currentAmount]="currentPatrimonyAmount"
-        [currentPercentAmount]="calculatePercentage(currentPatrimonyAmount, 1000000.00)">
-    </app-goal-bar>
+        </div>
+        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
 
-    <br>
+            <strong>
+                <p>Investimentos</p>
+            </strong>
+            <app-chart [data]="multi"></app-chart>
+        
+            <br><br>
+        
+            <strong>
+                <p>Rendimentos</p>
+            </strong>
+            <app-chart [data]="multi"></app-chart>
+        
+            <br><br>
+        
+            <strong>
+                <p>Aportes</p>
+            </strong>
+            <app-chart [data]="multi"></app-chart>
 
-    <app-goal-bar
-        title="Meta de médio prazo (5 anos)"
-        [goalAmount]="3000000.00"
-        description="Dezembro 2027"
-        [currentAmount]="currentPatrimonyAmount"
-        [currentPercentAmount]="calculatePercentage(currentPatrimonyAmount, 3000000.00)">
-    </app-goal-bar>
+        </div>
+        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
 
-    <br>
+            <p>
+                <strong>Investimentos (gráfico geral. patrimônio geral)</strong>
+            </p>
+            <p>
+                Nesta tabela tem todas as entradas (aportes e rendimentos). Deve ter uma coluna mostrando o que é o que.
+            </p>
 
-    <app-goal-bar
-        title="Meta de longo prazo (15 anos)"
-        [goalAmount]="10000000.00"
-        description="Dezembro 2037"
-        [currentAmount]="currentPatrimonyAmount"
-        [currentPercentAmount]="calculatePercentage(currentPatrimonyAmount, 10000000.00)">
-    </app-goal-bar>
+            <table datatable [dtOptions]="dtOptions" class="table table-bordered bg-white">
+                <thead>
+                    <tr>
+                        <th>Fundo</th>
+                        <th>Valor</th>
+                        <th>Rendimento</th>
+                        <th>Aplicação</th>
+                        <th>Tipo de fixação</th>
+                        <th>Instituição</th>
+                        <th>Atualizado em</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let fund of funds">
+                        <td>{{ fund.name }}</td>
+                        <td>{{ fund.amount | currency : 'BRL' }}</td>
+                        <td>{{ fund.naoSeiMudar }}</td>
+                        <td>{{ fund.type }}</td>
+                        <td>{{ fund.fixacaoMudar }}</td>
+                        <td>{{ fund.institution }}</td>
+                        <td>{{ fund.updatedAt | date: "dd/mm/YYYY HH:mm:ss" }}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="6">Total Aportado</th>
+                        <th>R$ 492.345,00</th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">Total Rendimentos</th>
+                        <th>R$ 3.987,00 (+9.99%)</th>
+                    </tr>
+                    <tr>
+                        <th colspan="6">Meu Patrimônio</th>
+                        <th>R$ 505.123,00</th>
+                    </tr>
+                </tfoot>
+            </table>
 
-    <br><br>
+        </div>
+    </div>
 
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GoalService } from 'src/app/services/goals.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -112,19 +113,15 @@ export class DashboardComponent implements OnInit {
     },
   ];
 
+  currentPatrimonyAmount: number = 850000.00;
+
   sumAmountInvestments(): any {
     return this.investments.reduce((acc, investment) => acc + investment.amount, 0);
   }
 
-  currentPatrimonyAmount: number = 850000.00;
-
-  calculatePercentage(currentAmount: number, goalAmount: number): number {
-    return Math.round((currentAmount / goalAmount) * 100);
-  }
-
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }
+
 }

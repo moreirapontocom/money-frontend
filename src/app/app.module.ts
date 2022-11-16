@@ -16,8 +16,10 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GoalBarComponent } from './components/goal-bar/goal-bar.component';
 import { NgxCurrencyModule } from "ngx-currency";
 import { ChartComponent } from './components/chart/chart.component';
-
+import { GoalService } from './services/goals.service';
 import { DataTablesModule } from 'angular-datatables';
+import { GoalsComponent } from './views/goals/goals.component';
+import { HelperService } from './services/helpers.service';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { DataTablesModule } from 'angular-datatables';
     DashboardComponent,
     GoalBarComponent,
     ChartComponent,
+    GoalsComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,8 @@ import { DataTablesModule } from 'angular-datatables';
     DataTablesModule,
   ],
   providers: [
+    HelperService,
+    GoalService,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],
   bootstrap: [AppComponent]
