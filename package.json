@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "db": "json-server --watch db.json"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +25,7 @@
     "angular-datatables": "^14.0.0",
     "datatables.net": "^1.11.3",
     "datatables.net-bs5": "^1.11.3",
+    "dayjs": "^1.11.6",
     "jquery": "^3.6.0",
     "ngx-currency": "^2.5.3",
     "rxjs": "~6.6.0",

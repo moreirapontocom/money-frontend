@@ -5,12 +5,12 @@ import { Observable } from "rxjs/internal/Observable";
 import { environment } from "src/environments/environment";
 
 @Injectable()
-export class GoalService {
+export class ProfileService {
 
     constructor(private http: HttpClient) { }
 
-    getGoals(): Observable<any[]> {
-      return this.http.get<any[]>(`${environment.api}/goals`);
+    getProfile(): Observable<any[]> {
+      return this.http.get<any[]>(`${environment.api}/profile`);
     }
 
     updateGoal(goal: any): Observable<any> {

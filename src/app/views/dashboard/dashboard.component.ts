@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { aportar10k } from 'src/app/store/app.state';
+import { HelperService } from 'src/app/services/helpers.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { StateService } from 'src/app/services/state.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,124 +10,38 @@ import { aportar10k } from 'src/app/store/app.state';
 })
 export class DashboardComponent implements OnInit {
 
-  dtOptions: DataTables.Settings = {};
-  // dtTrigger: Subject<any> = new Subject<any>();
-
-  multi: any[] = [
-    {
-      name: "Tesouro Direto IPCA 2024",
-      series: [
-        { name: "Janeiro", value: 0 },
-        { name: "Fevereiro", value: 13000 },
-        { name: "Março", value: 33000 },
-        { name: "Abril", value: 35000 },
-        { name: "Maio", value: 42500 },
-        { name: "Junho", value: 45900 },
-        { name: "Julho", value: 57900 },
-        { name: "Agosto", value: 68000 },
-        { name: "Setembro", value: 88000 },
-        { name: "Outubro", value: 97000 },
-        { name: "Novembro", value: 120000 },
-        { name: "Dezembro", value: 210000 },
-      ]
-    },
-    {
-      name: "BCAAI11",
-      series: [
-        { name: "Janeiro", value: 0 },
-        { name: "Fevereiro", value: 1000 },
-        { name: "Março", value: 3000 },
-        { name: "Abril", value: 3000 },
-        { name: "Maio", value: 5000 },
-        { name: "Junho", value: 5900 },
-        { name: "Julho", value: 7900 },
-        { name: "Agosto", value: 8000 },
-        { name: "Setembro", value: 8000 },
-        { name: "Outubro", value: 7000 },
-        { name: "Novembro", value: 20000 },
-        { name: "Dezembro", value: 80000 },
-      ]
-    },
-    {
-      name: "Conta Digital",
-      series: [
-        { name: "Janeiro", value: 10000 },
-        { name: "Fevereiro", value: 10000 },
-        { name: "Março", value: 300 },
-        { name: "Abril", value: 6000 },
-        { name: "Maio", value: 9000 },
-        { name: "Junho", value: 7900 },
-        { name: "Julho", value: 9900 },
-        { name: "Agosto", value: 10000 },
-        { name: "Setembro", value: 12000 },
-        { name: "Outubro", value: 7000 },
-        { name: "Novembro", value: 80000 },
-        { name: "Dezembro", value: 120000 },
-      ]
-    },
-  ];
-
-  funds = [
-    {
-      name: 'Tesouro Selic 2027 2% + IPCA',
-      amount: 300000.00,
-      naoSeiMudar: 2.5, // % (R$ 1.788,00)
-      type: 'Tesouro Direto',
-      fixacaoMudar: 'Renda Fixa',
-      institution: 'NuInvest',
-      updatedAt: (new Date()),
-    },
-    {
-      name: 'BCAAI11',
-      amount: 192345.00,
-      naoSeiMudar: 2.5, // (R$ 1.788,00)
-      type: 'FII',
-      fixacaoMudar: 'Renda Variável',
-      institution: 'NuInvest',
-      updatedAt: (new Date()),
-    },
-    {
-      name: 'Conta Digital',
-      amount: 7135.00,
-      naoSeiMudar: '-',
-      type: '-',
-      fixacaoMudar: '-',
-      institution: 'Wise',
-      updatedAt: (new Date()),
-    },
-  ];
-
-  investments = [
-    {
-      fund: 'Tesouro Selic 2027 2% + IPCA',
-      amount: 300000.00,
-      createdAt: (new Date()),
-    },
-    {
-      fund: 'BCAAI11',
-      amount: 191345.00,
-      createdAt: (new Date()),
-    },
-    {
-      fund: 'Conta Digital',
-      amount: 6135.00,
-      createdAt: (new Date()),
-    },
-  ];
+  mainGoalAmount: number = 0;
+  currentPatrimonyAmount: number = 0;
 
   constructor(
-    private store: Store<any>,
-  ) { }
+    public helpers: HelperService,
+    private stateService: StateService,
+    private profileService: ProfileService,
+  ) {}
 
   ngOnInit(): void {
+    this._getMainGoalAmount();
+    this._getCurrentPatrimonyAmount();
   }
 
-  aportar10k(): void {
-    this.store.dispatch(aportar10k());
+  private _getMainGoalAmount(): void {
+    const currentAmount = this.stateService.getState().mainGoalAmount;
+    if (!currentAmount) {
+      this.profileService.getProfile().subscribe((response: any) => {
+        this.mainGoalAmount = response.mainGoalAmount;
+        this.stateService.setCurrentPatrimonyAmount(this.mainGoalAmount);
+      });
+    }
   }
 
-  sumAmountInvestments(): any {
-    return this.investments.reduce((acc, investment) => acc + investment.amount, 0);
+  private _getCurrentPatrimonyAmount(): void {
+    const currentAmount = this.stateService.getState().currentPatrimonyAmount;
+    if (!currentAmount) {
+      this.profileService.getProfile().subscribe((response: any) => {
+        this.currentPatrimonyAmount = response.currentPatrimonyAmount;
+        this.stateService.setCurrentPatrimonyAmount(this.currentPatrimonyAmount);
+      });
+    }
   }
 
 }

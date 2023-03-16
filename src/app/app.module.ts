@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(localePt);
 
@@ -24,6 +25,12 @@ import { GoalService } from './services/goals.service';
 import { DataTablesModule } from 'angular-datatables';
 import { GoalsComponent } from './views/goals/goals.component';
 import { HelperService } from './services/helpers.service';
+import { InvestmentService } from './services/investment.service';
+import { TesteRemoverComponent } from './views/teste-remover/teste-remover.component';
+import { InstitutionService } from './services/institution.service';
+import { BondService } from './services/bond.service';
+import { StateService } from './services/state.service';
+import { ProfileService } from './services/profile.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +39,7 @@ import { HelperService } from './services/helpers.service';
     GoalBarComponent,
     ChartComponent,
     GoalsComponent,
+    TesteRemoverComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,11 +49,17 @@ import { HelperService } from './services/helpers.service';
     BrowserAnimationsModule,
     NgxCurrencyModule,
     DataTablesModule,
+    HttpClientModule,
     StoreModule.forRoot({ app: appReducer }),
   ],
   providers: [
     HelperService,
     GoalService,
+    InvestmentService,
+    InstitutionService,
+    BondService,
+    StateService,
+    ProfileService,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],
   bootstrap: [AppComponent]

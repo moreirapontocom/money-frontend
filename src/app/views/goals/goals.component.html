@@ -1,12 +1,58 @@
-<div *ngFor="let goal of goals">
 
-    <app-goal-bar
-        [title]="goal.title"
-        [goalAmount]="goal.amount"
-        [description]="goal.description"
-        [currentAmount]="(currentPatrimonyAmount$ | async) || 0"
-        [currentPercentAmount]="helpers.calculatePercentage((currentPatrimonyAmount$ | async) || 0, goal.amount)">
-    </app-goal-bar>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Metas Concluídas</th>
+            <td class="text-end">{{ sumGoalsAmount('isDone') | currency : 'BRL' }} +</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Metas Pendentes</th>
+            <td class="text-end">{{ sumGoalsAmount('!isDone') | currency : 'BRL' }} +</td>
+        </tr>
+        <tr>
+            <td class="border-bottom-0 text-end" colspan="2">
+                <strong>{{ sumGoalsAmount('all') | currency : 'BRL' }} =</strong>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-    <br>
+<div class="separator-10"></div>
+
+<small>
+    <div class="row text-muted align-items-end">
+        <div class="col">
+            {{ goalsFiltered.length }} metas encontradas
+        </div>
+        <div class="col-12 col-md-3">
+            <div class="form-group">
+                <select (change)="filterGoalsByStatus($event)" class="form-control border-0 text-center">
+                    <option value="all">Exibir todas as metas</option>
+                    <option value="isDone">Somente Concluídas</option>
+                    <option value="!isDone">Somente Pendentes</option>
+                </select>
+            </div>
+        </div>
+        <div class="col text-end">
+            {{ countGoals('isDone') }} metas concluídas &middot; {{ countGoals('!isDone') }} metas pendentes
+        </div>
+    </div>
+</small>
+
+<div class="separator-20"></div>
+
+<div *ngIf="goalsFiltered.length === 0" class="text-center">
+
+    <div class="separator-20"></div>
+
+    Nenhuma meta encontrada.
+
+</div>
+
+<div *ngFor="let goal of goalsFiltered">
+
+    <app-goal-bar [goal]="goal"></app-goal-bar>
+
 </div>

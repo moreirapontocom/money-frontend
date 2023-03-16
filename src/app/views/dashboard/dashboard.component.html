@@ -1,103 +1,27 @@
-<div class="bg-white pt-4 pb-0">
-    <div class="container">
-
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Metas</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Gráficos</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Detalhado</button>
-            </li>
-        </ul>
-
-    </div>
-</div>
-
 <div class="container pt-4">
 
-    <button (click)="aportar10k()">Aportar 10k</button>
-
-
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-
-            <app-goals></app-goals>
-
+    <div class="row align-items-center text-center">
+        <div class="col-12 col-md-3">
+            <i class="fas fa-plus-circle text-primary cursor-pointer"></i>
+            <div class="separator-10"></div>
+            <h3><strong>{{ currentPatrimonyAmount | currency : 'BRL' }}</strong></h3>
+            <span class="text-muted">Meu Patrimônio</span>
         </div>
-        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-
-            <strong>
-                <p>Investimentos</p>
-            </strong>
-            <app-chart [data]="multi"></app-chart>
-        
-            <br><br>
-        
-            <strong>
-                <p>Rendimentos</p>
-            </strong>
-            <app-chart [data]="multi"></app-chart>
-        
-            <br><br>
-        
-            <strong>
-                <p>Aportes</p>
-            </strong>
-            <app-chart [data]="multi"></app-chart>
-
+        <div class="col display-xs-none">
+            <div class="arrow"></div>
+            <div class="separator-10"></div>
+            <small class="text-muted">{{ helpers.calculatePercentage(currentPatrimonyAmount, mainGoalAmount) }}%</small>
         </div>
-        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-
-            <p>
-                <strong>Investimentos (gráfico geral. patrimônio geral)</strong>
-            </p>
-            <p>
-                Nesta tabela tem todas as entradas (aportes e rendimentos). Deve ter uma coluna mostrando o que é o que.
-            </p>
-
-            <table datatable [dtOptions]="dtOptions" class="table table-bordered bg-white">
-                <thead>
-                    <tr>
-                        <th>Fundo</th>
-                        <th>Valor</th>
-                        <th>Rendimento</th>
-                        <th>Aplicação</th>
-                        <th>Tipo de fixação</th>
-                        <th>Instituição</th>
-                        <th>Atualizado em</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let fund of funds">
-                        <td>{{ fund.name }}</td>
-                        <td>{{ fund.amount | currency : 'BRL' }}</td>
-                        <td>{{ fund.naoSeiMudar }}</td>
-                        <td>{{ fund.type }}</td>
-                        <td>{{ fund.fixacaoMudar }}</td>
-                        <td>{{ fund.institution }}</td>
-                        <td>{{ fund.updatedAt | date: "dd/mm/YYYY HH:mm:ss" }}</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th colspan="6">Total Aportado</th>
-                        <th>R$ 492.345,00</th>
-                    </tr>
-                    <tr>
-                        <th colspan="6">Total Rendimentos</th>
-                        <th>R$ 3.987,00 (+9.99%)</th>
-                    </tr>
-                    <tr>
-                        <th colspan="6">Meu Patrimônio</th>
-                        <th>R$ 505.123,00</th>
-                    </tr>
-                </tfoot>
-            </table>
-
+        <div class="col-12 col-md-3">
+            <i class="fas fa-edit text-primary cursor-pointer"></i>
+            <div class="separator-10"></div>
+            <h3><strong>{{ mainGoalAmount | currency : 'BRL' }}</strong></h3>
+            <span class="text-muted"><i class="fas fa-calendar me-1"></i> 26/10/2023</span>
         </div>
     </div>
+    
+    <div class="separator-50"></div>
+
+    <app-goals *ngIf="currentPatrimonyAmount"></app-goals>
 
 </div>
